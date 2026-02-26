@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-950 text-white antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply w-6 h-6 bg-emerald-500 rounded-full border-4 border-zinc-900 shadow-lg cursor-pointer appearance-none transition-all hover:scale-110 active:scale-95;
+}

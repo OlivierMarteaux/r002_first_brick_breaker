@@ -1,0 +1,5 @@
+{
+  "name": "Brick Breaker Pro",
+  "description": "A high-performance brick breaker game with Firebase authentication and global leaderboards.",
+  "requestFramePermissions": []
+}
