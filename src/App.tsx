@@ -14,7 +14,7 @@ export default function App() {
 
   if (vm.isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black flex items-center justify-center">
         <Loader2 className="animate-spin text-emerald-500" size={48} />
       </div>
     );
@@ -34,7 +34,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white font-sans selection:bg-emerald-500/30">
       {currentScreen === 'HOME' && (
         <HomeScreen
           speed={vm.speed}
