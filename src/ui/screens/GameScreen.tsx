@@ -21,10 +21,10 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
   const PADDLE_WIDTH = 120;
   const PADDLE_HEIGHT = 15;
   const BALL_RADIUS = 8;
- const BRICK_ROWS = 5;
- const BRICK_COLS = 8;
-  // const BRICK_ROWS = 1;
-  // const BRICK_COLS = 1;
+  const BRICK_ROWS = 5;
+  const BRICK_COLS = 8;
+  //const BRICK_ROWS = 1;
+  //const BRICK_COLS = 1;
   const BRICK_HEIGHT = 20;
   const BRICK_PADDING = 4;
 
