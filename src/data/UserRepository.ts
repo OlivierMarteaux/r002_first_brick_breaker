@@ -77,6 +77,33 @@ export class UserRepository {
       console.error("Error creating profile:", error);
     }
   }
+
+  async getUserProfile(userId: string): Promise<User | null> {
+    if (!isConfigured || !db || !userId) return null;
+
+    try {
+      const userRef = doc(db, this.collectionName, userId);
+      const snapshot = await getDoc(userRef);
+
+      if (!snapshot.exists()) {
+        return null;
+      }
+
+      const data = snapshot.data();
+
+      return {
+        id: userId,
+        email: data.email ?? '',
+        pseudo: data.pseudo ?? 'Player',
+        score: data.score ?? 999999
+      };
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      return null;
+    }
+  }
+
+  
 }
 
 export const userRepository = new UserRepository();

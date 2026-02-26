@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth, isConfigured } from '../../data/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { userRepository } from '../../data/UserRepository';
 import { LogIn, UserPlus, Gamepad2, UserCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -28,6 +29,13 @@ export function AuthScreen({ onGuestLogin }: AuthScreenProps) {
       } else {
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCred.user, { displayName: pseudo });
+        // 🔥 Create Firestore profile here directly
+        await userRepository.createUserProfile({
+          id: userCred.user.uid,
+          email: userCred.user.email!,
+          pseudo: pseudo,
+          score: 0
+        });
       }
     } catch (err: any) {
       setError(err.message);

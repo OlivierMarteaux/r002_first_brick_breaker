@@ -21,8 +21,10 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
   const PADDLE_WIDTH = 120;
   const PADDLE_HEIGHT = 15;
   const BALL_RADIUS = 8;
-  const BRICK_ROWS = 5;
-  const BRICK_COLS = 8;
+ const BRICK_ROWS = 5;
+ const BRICK_COLS = 8;
+  // const BRICK_ROWS = 1;
+  // const BRICK_COLS = 1;
   const BRICK_HEIGHT = 20;
   const BRICK_PADDING = 4;
 
@@ -38,7 +40,7 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
     ballPos.current = { x: canvas.width / 2, y: canvas.height - PADDLE_HEIGHT - BALL_RADIUS - 5 };
     
     // Speed scaling
-    const baseSpeed = 2 + (speed * 0.5);
+    const baseSpeed = 2 + (speed * 1);
     ballVel.current = { dx: baseSpeed, dy: -baseSpeed };
 
     const brickWidth = (canvas.width - (BRICK_COLS + 1) * BRICK_PADDING) / BRICK_COLS;
@@ -125,7 +127,8 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
 
       if (activeBricks === 0) {
         const time = stopTime();
-        setFinalTime(time);
+        const playerTime = gameTime;
+        setFinalTime(playerTime);
         setGameState('WIN');
         return;
       }
@@ -252,8 +255,8 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
                 {gameState === 'WIN' ? <RotateCcw size={40} className="text-zinc-950" /> : <RotateCcw size={40} className="text-zinc-950" />}
               </div>
               <h2 className="text-3xl font-black mb-2">{gameState === 'WIN' ? 'YOU WIN!' : 'GAME OVER'}</h2>
-              <p className="text-zinc-500 mb-2">Your time</p>
-              <p className="text-4xl font-black text-emerald-500 mb-8">{formatTime(finalTime)}</p>
+              <p className="text-zinc-500 mb-2">{ gameState === 'WIN' ? 'Your time: ' : ''}</p>
+              <p className="text-4xl font-black text-emerald-500 mb-8">{ gameState === 'WIN' ? formatTime(gameTime) : ''}</p>
               
               <button 
                 onClick={() => {

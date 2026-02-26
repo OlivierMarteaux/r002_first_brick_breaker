@@ -25,6 +25,10 @@ export default function App() {
   }
 
   const handleGameOver = async (time: number) => {
+    setCurrentScreen('HOME');
+  };
+
+  const handleWin = async (time: number) => {
     await vm.updateScore(time);
     setCurrentScreen('HOME');
   };
@@ -46,7 +50,7 @@ export default function App() {
         <GameScreen
           speed={vm.speed}
           onGameOver={handleGameOver}
-          onWin={handleGameOver}
+          onWin={handleWin}
           onBack={() => setCurrentScreen('HOME')}
           gameTime={vm.gameTime}
           startTime={vm.startTime}

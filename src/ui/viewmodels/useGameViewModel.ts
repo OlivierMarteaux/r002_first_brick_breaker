@@ -25,8 +25,9 @@ export function useGameViewModel() {
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+    /* const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
+        await fbUser.reload();
         const profile: User = {
           id: fbUser.uid,
           email: fbUser.email || '',
@@ -34,10 +35,39 @@ export function useGameViewModel() {
           score: 0
         };
         setCurrentUser(profile);
-        await userRepository.createUserProfile(profile);
+        //await userRepository.createUserProfile(profile);
       } else {
         setCurrentUser(null);
       }
+      setIsLoading(false);
+    }); */
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+      if (!fbUser) {
+        setCurrentUser(null);
+        setIsLoading(false);
+        return;
+      }
+
+      await fbUser.reload();
+
+      let profile = await userRepository.getUserProfile(fbUser.uid);
+
+      // 🔥 If profile doesn't exist yet, create it using displayName
+      if (!profile) {
+        const newProfile = {
+          id: fbUser.uid,
+          email: fbUser.email || '',
+          pseudo: fbUser.displayName || 'Player',
+          score: 999999
+        };
+
+        await userRepository.createUserProfile(newProfile);
+
+        // 🔥 IMPORTANT: fetch again AFTER creation
+        profile = await userRepository.getUserProfile(fbUser.uid);
+      }
+
+      setCurrentUser(profile);
       setIsLoading(false);
     });
     return unsubscribe;
@@ -78,7 +108,7 @@ export function useGameViewModel() {
 
   const updateScore = async (finalTime: number) => {
     if (currentUser) {
-      await userRepository.updateScore(currentUser.id, finalTime);
+      await userRepository.updateScore(currentUser.id, gameTime);
       // Refresh scores
       const allScores = await userRepository.getAllScores();
       setScores(allScores);

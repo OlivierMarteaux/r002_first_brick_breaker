@@ -11,6 +11,7 @@ interface HomeScreenProps {
   pseudo: string;
 }
 
+
 export function HomeScreen({ speed, onSpeedChange, onStartGame, onViewScores, onLogout, pseudo }: HomeScreenProps) {
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-6 text-white">
