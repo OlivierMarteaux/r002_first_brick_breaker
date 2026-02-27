@@ -108,7 +108,9 @@ export function useGameViewModel() {
 
   const updateScore = async (finalTime: number) => {
     if (currentUser) {
-      await userRepository.updateScore(currentUser.id, gameTime);
+        if (finalTime < currentUser.score) {
+          await userRepository.updateScore(currentUser.id, finalTime);
+        }
       // Refresh scores
       const allScores = await userRepository.getAllScores();
       setScores(allScores);

@@ -23,8 +23,8 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
   const BALL_RADIUS = 8;
   const BRICK_ROWS = 5;
   const BRICK_COLS = 8;
-  //const BRICK_ROWS = 1;
-  //const BRICK_COLS = 1;
+  // const BRICK_ROWS = 1;
+  // const BRICK_COLS = 1;
   const BRICK_HEIGHT = 20;
   const BRICK_PADDING = 4;
 
@@ -260,8 +260,10 @@ export function GameScreen({ speed, onGameOver, onWin, onBack, gameTime, startTi
               
               <button 
                 onClick={() => {
-                  if (gameState === 'WIN' || gameState === 'GAME_OVER') {
-                    onGameOver(finalTime);
+                  if (gameState === 'GAME_OVER') {
+                    onGameOver(9999); // Arbitrary high time for game over
+                  }else if (gameState === 'WIN') {
+                    onWin(gameTime);
                   }
                 }}
                 className="w-full bg-white text-zinc-950 font-black py-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-tight"
